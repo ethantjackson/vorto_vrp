@@ -60,7 +60,7 @@ class VRPSolver():
       loadB = self.loads[numB]
       if not numA in routes and not numB in routes:
         pathCost = self.calcPathCost([numA, numB])
-        if pathCost <= 12*60:
+        if pathCost <= 12 * 60:
           routes[numA] = routes[numB] = Route([numA, numB], pathCost)
 
       elif not numA in routes or not numB in routes:
@@ -73,7 +73,7 @@ class VRPSolver():
         addedLoad = loadB if aIsRouted else loadA
         newCost = route.cost - saving + self.calcEuclidDist(origin, addedLoad.pickup) \
           + self.calcEuclidDist(addedLoad.pickup, addedLoad.dropoff) + self.calcEuclidDist(addedLoad.dropoff, origin) 
-        if newCost > 12*60:
+        if newCost > 12 * 60:
           continue
         route.cost = newCost
         if aIsRouted:
@@ -82,12 +82,27 @@ class VRPSolver():
         else:
           route.path.insert(0, numA)
           routes[numA] = route
+      
+      else:
+        aRoute = routes[numA]
+        bRoute = routes[numB]
+        if aRoute.path[-1] != numA or bRoute.path[0] != numB:
+          continue
+        if aRoute.path[0] == numB or bRoute.path[-1] == numA:
+          continue
+        newCost = aRoute.cost + bRoute.cost - saving
+        if newCost > 12 * 60:
+          continue
+        aRoute.cost = newCost
+        aRoute.path += bRoute.path
+        for numB in bRoute.path:
+          routes[numB] = aRoute
 
     for loadNum in self.loads:
       if loadNum in routes:
         continue
       routes[loadNum] = Route([loadNum], -1)
-    # print(routes)
+
     solution = set(routes.values())
     return [route.path for route in solution]
   
