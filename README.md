@@ -12,4 +12,5 @@ $ python3 ./evaluateShared.py --cmd "python3 mySubmission.py" --problemDir "Trai
 Results:
 
 mean cost: 44270.41
+
 mean run time: 52.05ms
