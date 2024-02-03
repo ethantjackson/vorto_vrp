@@ -1,4 +1,4 @@
-Usage:
+**Usage**
 
 To run specific testcase:
 
@@ -10,7 +10,7 @@ $ python3 ./evaluateShared.py --cmd "python3 mySubmission.py" --problemDir "Trai
 
 
 
-Results:
+**Results**
 
 mean cost: 44270.41
 
