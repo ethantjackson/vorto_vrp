@@ -72,6 +72,7 @@ class VRPSolver():
         solution[-1].append(nextLoad.loadNumber)
         delivered.add(nextLoad.loadNumber)
         currTime += dist + self.calcEuclidDist(nextLoad.pickup, nextLoad.dropoff)
+        curLoc = nextLoad.dropoff
 
     return solution
   
